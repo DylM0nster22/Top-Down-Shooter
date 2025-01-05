@@ -90,5 +90,16 @@
   <script src="js/upgrades.js"></script>
   <script src="js/game.js"></script>
   <script src="js/main.js"></script>
+
+<script>
+document.getElementById('createRoomBtn').addEventListener('click', () => {
+    game.multiplayerManager.createRoom();
+});
+
+document.getElementById('connectToRoomBtn').addEventListener('click', () => {
+    const code = document.getElementById('roomCodeInput').value;
+    game.multiplayerManager.joinRoom(code);
+});
+</script>
 </body>
 </html>

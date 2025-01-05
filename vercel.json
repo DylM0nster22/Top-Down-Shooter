@@ -9,6 +9,11 @@
     "routes": [
       { "src": "/api/socket", "dest": "/api/socket.js" },
       { "src": "/(.*)", "dest": "/$1" }
-    ]
-  }
-  
+    ],
+    "functions": {
+        "api/socket.js": {
+            "memory": 1024,
+            "maxDuration": 10
+        }
+    }
+}
