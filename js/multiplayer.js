@@ -9,23 +9,21 @@ class MultiplayerManager {
             {id: 'hexagon', shape: 'hexagon'}
         ];
     }
+    
     initializeSocket() {
         const isProduction = window.location.hostname !== 'localhost';
         const socketUrl = isProduction 
-            ? 'wss://top-down-shooter-alpha.vercel.app'
-            : 'ws://localhost:3000';
+            ? 'wss://top-down-shooter-alpha.vercel.app/socket.io'
+            : 'ws://localhost:3000/socket.io';
         
-        this.socket = new WebSocket(socketUrl);
-        
-        this.socket.onopen = () => {
-            console.log('WebSocket connected');
-            if (this.pendingRoom) {
-                this.createRoom();
-            }
-        };
+        this.socket = io(socketUrl, {
+            transports: ['websocket'],
+            path: '/socket.io'
+        });
         
         this.setupSocketListeners();
     }
+    
     
     createRoom() {
         if (this.socket.readyState === WebSocket.OPEN) {
