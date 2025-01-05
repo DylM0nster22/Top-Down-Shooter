@@ -50,13 +50,14 @@ window.onload = () => {
       updateMenus();
   });
 
-// Replace the existing multiplayerBtn click handler
-multiplayerBtn.addEventListener('click', () => {
+  multiplayerBtn.addEventListener('click', () => {
+    game = new Game(canvas, true); // Initialize with multiplayer flag
     game.state = GameState.MULTIPLAYER_MENU;
     mainMenu.classList.remove('show');
     gamemodeMenu.classList.remove('show');
     multiplayerMenu.classList.add('show');
 });
+
 
   // Back button returns to main menu
   backToMainBtn.addEventListener('click', () => {
@@ -122,9 +123,15 @@ multiplayerBtn.addEventListener('click', () => {
     }
 });
 
-  document.getElementById('createRoomBtn').addEventListener('click', () => {
+document.getElementById('createRoomBtn').addEventListener('click', () => {
+  if (game) {
+      game.isMultiplayer = true;
+      game.multiplayerManager = new MultiplayerManager();
+      game.multiplayerManager.initializeSocket();
       game.multiplayerManager.createRoom();
-  });
+  }
+});
+
 
   document.getElementById('connectToRoomBtn').addEventListener('click', () => {
       const code = document.getElementById('roomCodeInput').value;
