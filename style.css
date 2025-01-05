@@ -382,3 +382,15 @@ body {
     border-radius: 5px;
 }
 
+#waitingOverlay {
+    text-align: center;
+}
+
+#roomCodeDisplay {
+    font-size: 36px;
+    color: #4a90e2;
+    margin: 20px 0;
+    font-family: monospace;
+}
+
+

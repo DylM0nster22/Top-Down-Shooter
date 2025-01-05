@@ -36,8 +36,12 @@ class MultiplayerManager {
             switch(data.type) {
                 case 'room_created':
                     this.roomCode = data.roomCode;
+                    // Display room code to host
+                    document.getElementById('roomCodeDisplay').textContent = `Room Code: ${this.roomCode}`;
+                    document.getElementById('waitingOverlay').classList.add('show');
                     break;
                 case 'game_start':
+                    document.getElementById('waitingOverlay').classList.remove('show');
                     game.startGame();
                     break;
                 case 'player_moved':
@@ -46,6 +50,7 @@ class MultiplayerManager {
             }
         };
     }
+    
 
     updatePlayerPosition(x, y) {
         if (this.socket && this.socket.readyState === WebSocket.OPEN) {
