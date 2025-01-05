@@ -7,8 +7,13 @@ export default function SocketHandler(req, res) {
         return res.end();
     }
 
-    const io = new Server(res.socket.server);
-    res.socket.server.io = io;
+    const io = new Server(res.socket.server, {
+        cors: {
+            origin: "*",
+            methods: ["GET", "POST"]
+        }
+    });
+    
 
     io.on('connection', socket => {
         socket.on('create_room', () => {

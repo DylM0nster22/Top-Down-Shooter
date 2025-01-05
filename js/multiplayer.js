@@ -9,20 +9,19 @@ class MultiplayerManager {
             {id: 'hexagon', shape: 'hexagon'}
         ];
     }
+
+initializeSocket() {
+    const isProduction = window.location.hostname !== 'localhost';
+    const socketUrl = isProduction 
+        ? 'https://top-down-shooter-alpha.vercel.app'
+        : 'http://localhost:3000';
     
-    initializeSocket() {
-        const isProduction = window.location.hostname !== 'localhost';
-        const socketUrl = isProduction 
-            ? 'wss://top-down-shooter-alpha.vercel.app/socket.io'
-            : 'ws://localhost:3000/socket.io';
-        
-        this.socket = io(socketUrl, {
-            transports: ['websocket'],
-            path: '/socket.io'
-        });
-        
-        this.setupSocketListeners();
-    }
+    this.socket = io(socketUrl, {
+        transports: ['websocket'],
+        path: '/socket.io'
+    });
+}
+
     
     
     createRoom() {
