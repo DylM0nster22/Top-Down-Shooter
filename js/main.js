@@ -121,6 +121,15 @@ multiplayerBtn.addEventListener('click', () => {
         game.resumeGame();
     }
 });
+
+  document.getElementById('createRoomBtn').addEventListener('click', () => {
+      game.multiplayerManager.createRoom();
+  });
+
+  document.getElementById('connectToRoomBtn').addEventListener('click', () => {
+      const code = document.getElementById('roomCodeInput').value;
+      game.multiplayerManager.joinRoom(code);
+  });
   
   //--- The game loop stays the same, but we also call updateMenus each frame ---
   function gameLoop(timestamp) {
