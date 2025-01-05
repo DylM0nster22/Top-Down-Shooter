@@ -9,7 +9,6 @@ class MultiplayerManager {
             {id: 'hexagon', shape: 'hexagon'}
         ];
     }
-
     initializeSocket() {
         const isProduction = window.location.hostname !== 'localhost';
         const socketUrl = isProduction 
@@ -17,16 +16,28 @@ class MultiplayerManager {
             : 'ws://localhost:3000';
         
         this.socket = new WebSocket(socketUrl);
+        
+        this.socket.onopen = () => {
+            console.log('WebSocket connected');
+            if (this.pendingRoom) {
+                this.createRoom();
+            }
+        };
+        
         this.setupSocketListeners();
     }
     
-    
     createRoom() {
-        this.socket.send(JSON.stringify({
-            type: 'create_room',
-            skin: this.selectedSkin
-        }));
+        if (this.socket.readyState === WebSocket.OPEN) {
+            this.socket.send(JSON.stringify({
+                type: 'create_room',
+                skin: this.selectedSkin
+            }));
+        } else {
+            this.pendingRoom = true;
+        }
     }
+    
 
     joinRoom(code) {
         this.socket.send(JSON.stringify({
