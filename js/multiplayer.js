@@ -11,10 +11,16 @@ class MultiplayerManager {
     }
 
     initializeSocket() {
-        this.socket = new WebSocket('wss://top-down-shooter-99s3gsqh1-dylm0nster22s-projects.vercel.app');
+        const isProduction = window.location.hostname !== 'localhost';
+        const socketUrl = isProduction 
+            ? 'wss://top-down-shooter-alpha.vercel.app'
+            : 'ws://localhost:3000';
+        
+        this.socket = new WebSocket(socketUrl);
         this.setupSocketListeners();
-    }    
-
+    }
+    
+    
     createRoom() {
         this.socket.send(JSON.stringify({
             type: 'create_room',
