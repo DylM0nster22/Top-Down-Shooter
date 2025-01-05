@@ -13,7 +13,7 @@ class MultiplayerManager {
     initializeSocket() {
         const isProduction = window.location.hostname !== 'localhost';
         const socketUrl = isProduction 
-            ? 'https://top-down-shooter-alpha.vercel.app'
+            ? window.location.origin  // This will automatically use the correct protocol
             : 'http://localhost:3000';
         
         this.socket = io(socketUrl, {
@@ -21,9 +21,6 @@ class MultiplayerManager {
             path: '/socket.io'
         });
     }
-    
-
-    
     
     createRoom() {
         if (this.socket.readyState === WebSocket.OPEN) {
