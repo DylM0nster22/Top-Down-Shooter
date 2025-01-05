@@ -10,17 +10,18 @@ class MultiplayerManager {
         ];
     }
 
-initializeSocket() {
-    const isProduction = window.location.hostname !== 'localhost';
-    const socketUrl = isProduction 
-        ? 'https://top-down-shooter-alpha.vercel.app'
-        : 'http://localhost:3000';
+    initializeSocket() {
+        const isProduction = window.location.hostname !== 'localhost';
+        const socketUrl = isProduction 
+            ? 'https://top-down-shooter-alpha.vercel.app'
+            : 'http://localhost:3000';
+        
+        this.socket = io(socketUrl, {
+            transports: ['websocket', 'polling'],
+            path: '/socket.io'
+        });
+    }
     
-    this.socket = io(socketUrl, {
-        transports: ['websocket'],
-        path: '/socket.io'
-    });
-}
 
     
     

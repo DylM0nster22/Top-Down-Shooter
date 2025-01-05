@@ -11,8 +11,10 @@ export default function SocketHandler(req, res) {
         cors: {
             origin: "*",
             methods: ["GET", "POST"]
-        }
+        },
+        transports: ['websocket', 'polling']
     });
+    
     
 
     io.on('connection', socket => {
