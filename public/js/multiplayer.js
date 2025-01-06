@@ -11,16 +11,40 @@ class MultiplayerManager {
     }
 
     initializeSocket() {
-        const isProduction = window.location.hostname !== 'localhost';
-        const socketUrl = isProduction 
-            ? window.location.origin  // This will automatically use the correct protocol
-            : 'http://localhost:3000';
+        this.socket = io();  // No arguments needed when served from same domain
         
-        this.socket = io(socketUrl, {
-            transports: ['websocket', 'polling'],
-            path: '/socket.io'
+        this.socket.on('room_created', (roomCode) => {
+            this.roomCode = roomCode;
+            document.getElementById('roomCodeDisplay').textContent = `Room Code: ${this.roomCode}`;
+            document.getElementById('waitingOverlay').classList.add('show');
+        });
+    
+        this.socket.on('game_start', () => {
+            document.getElementById('waitingOverlay').classList.remove('show');
+            game.startGame();
+        });
+    
+        this.socket.on('player_moved', (data) => {
+            game.updateOtherPlayerPosition(data.x, data.y);
         });
     }
+    
+    createRoom() {
+        this.socket.emit('create_room');
+    }
+    
+    joinRoom(code) {
+        this.socket.emit('join_room', code);
+    }
+    
+    updatePlayerPosition(x, y) {
+        this.socket.emit('position_update', {
+            x: x,
+            y: y,
+            roomCode: this.roomCode
+        });
+    }
+    
     
     createRoom() {
         if (this.socket.readyState === WebSocket.OPEN) {
