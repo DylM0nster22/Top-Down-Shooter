@@ -1,106 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TopDown Shooter Game</title>
-  <link rel="stylesheet" href="style.css" />
-  <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
-  <script>
-    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-  </script>
-</head><body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TopDown Shooter Game</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Increase canvas dimensions -->
+    <canvas id="gameCanvas" width="1600" height="900"></canvas>
 
-<!-- Increase canvas dimensions -->
-<canvas id="gameCanvas" width="1600" height="900"></canvas>
-  
-  <!-- Main Menu Overlay -->
-  <div id="mainMenu" class="menu-overlay">
-    <h1>SPACE SHOOTER</h1>
-    <button id="playBtn">START GAME</button>
-    <button id="quitBtn">QUIT</button>
-    <button id="bestiaryBtn">ENEMIES</button>
-  </div>
+    <!-- Main Menu Overlay -->
+    <div id="mainMenu" class="menu-overlay">
+      <h1>SPACE SHOOTER</h1>
+      <button id="playBtn">START GAME</button>
+      <button id="quitBtn">QUIT</button>
+      <button id="bestiaryBtn">ENEMIES</button>
+    </div>
 
-  <!-- Pause Menu Overlay -->
-  <div id="pauseMenu" class="menu-overlay">
-    <h1>PAUSED</h1>
-    <button id="resumeBtn">RESUME</button>
-    <button id="mainMenuBtn">BACK TO MENU</button>
-    <button id="quitBtn2">QUIT</button>
-    <button id="bestiaryBtn">ENEMIES</button>
-  </div>
+    <!-- Pause Menu Overlay -->
+    <div id="pauseMenu" class="menu-overlay">
+      <h1>PAUSED</h1>
+      <button id="resumeBtn">RESUME</button>
+      <button id="mainMenuBtn">BACK TO MENU</button>
+      <button id="quitBtn2">QUIT</button>
+      <button id="bestiaryBtn">ENEMIES</button>
+    </div>
 
-  <!-- Add this after the pause menu overlay -->
-<div id="gameOverMenu" class="menu-overlay">
-    <h1>GAME OVER</h1>
-    <div id="finalScore"></div>
-    <div id="highScoreList"></div>
-    <button id="restartBtn">PLAY AGAIN</button>
-    <button id="gameOverMenuBtn">MAIN MENU</button>
-</div>
+    <!-- Add this after the pause menu overlay -->
+    <div id="gameOverMenu" class="menu-overlay">
+      <h1>GAME OVER</h1>
+      <div id="finalScore"></div>
+      <div id="highScoreList"></div>
+      <button id="restartBtn">PLAY AGAIN</button>
+      <button id="gameOverMenuBtn">MAIN MENU</button>
+    </div>
 
-<div id="shopMenu" class="menu-overlay">
-  <h1>SHOP</h1>
-  <div id="shopItems"></div>
-  <div id="currency"></div>
-  <button id="closeShopBtn">CLOSE</button>
-</div>
+    <div id="shopMenu" class="menu-overlay">
+      <h1>SHOP</h1>
+      <div id="shopItems"></div>
+      <div id="currency"></div>
+      <button id="closeShopBtn">CLOSE</button>
+    </div>
 
-<div id="waveMenu" class="menu-overlay">
-  <h1>WAVE COMPLETED</h1>
-  <div id="waveShopItems"></div>
-  <div id="waveCurrency"></div>
-  <button id="startWaveBtn">START WAVE <span id="nextWaveNumber"></span></button>
-</div>
+    <div id="waveMenu" class="menu-overlay">
+      <h1>WAVE COMPLETED</h1>
+      <div id="waveShopItems"></div>
+      <div id="waveCurrency"></div>
+      <button id="startWaveBtn">
+        START WAVE <span id="nextWaveNumber"></span>
+      </button>
+    </div>
 
-<div id="bestiaryMenu" class="menu-overlay">
-    <h1>ENEMIES</h1>
-    <div id="bestiaryContent" class="bestiary-grid"></div>
-    <button id="closeBestiaryBtn">BACK</button>
-</div>
+    <div id="bestiaryMenu" class="menu-overlay">
+      <h1>ENEMIES</h1>
+      <div id="bestiaryContent" class="bestiary-grid"></div>
+      <button id="closeBestiaryBtn">BACK</button>
+    </div>
 
-<div id="gamemodeMenu" class="menu-overlay">
-  <h1>SELECT GAMEMODE</h1>
-  <button id="singleplayerBtn">SINGLEPLAYER</button>
-  <button id="multiplayerBtn">MULTIPLAYER</button>
-  <button id="backToMainBtn">BACK</button>
-</div>
+    <div id="gamemodeMenu" class="menu-overlay">
+      <h1>SELECT GAMEMODE</h1>
+      <button id="singleplayerBtn">SINGLEPLAYER</button>
+      <button id="multiplayerBtn">MULTIPLAYER</button>
+      <button id="backToMainBtn">BACK</button>
+    </div>
 
-<div id="multiplayerMenu" class="menu-overlay">
-  <h1>MULTIPLAYER</h1>
-  <div class="skin-selector">
-    <!-- Skin options will be added dynamically -->
-  </div>
-  <button id="createRoomBtn">CREATE ROOM</button>
-  <button id="joinRoomBtn">JOIN ROOM</button>
-  <button id="backToGamemodeBtn">BACK</button>
-</div>
+    <div id="multiplayerMenu" class="menu-overlay">
+      <h1>MULTIPLAYER</h1>
+      <div class="skin-selector">
+        <!-- Skin options will be added dynamically -->
+      </div>
+      <button id="createRoomBtn">CREATE ROOM</button>
+      <button id="joinRoomBtn">JOIN ROOM</button>
+      <button id="backToGamemodeBtn">BACK</button>
+    </div>
 
-<div id="waitingOverlay" class="menu-overlay">
-  <h1>Waiting for Player</h1>
-  <div id="roomCodeDisplay"></div>
-</div>
+    <div id="waitingOverlay" class="menu-overlay">
+      <h1>Waiting for Player</h1>
+      <div id="roomCodeDisplay"></div>
+    </div>
 
+    <div id="joinRoomMenu" class="menu-overlay">
+      <h1>JOIN ROOM</h1>
+      <div class="code-input">
+        <input type="text" maxlength="1" class="code-digit" />
+        <input type="text" maxlength="1" class="code-digit" />
+        <input type="text" maxlength="1" class="code-digit" />
+        <input type="text" maxlength="1" class="code-digit" />
+        <input type="text" maxlength="1" class="code-digit" />
+        <input type="text" maxlength="1" class="code-digit" />
+      </div>
+      <button id="connectToRoomBtn">CONNECT</button>
+    </div>
 
-<div id="joinRoomMenu" class="menu-overlay">
-  <h1>JOIN ROOM</h1>
-  <input type="text" id="roomCodeInput" placeholder="Enter Room Code">
-  <button id="connectToRoomBtn">CONNECT</button>
-  <button id="backToMultiplayerBtn">BACK</button>
-</div>
-
-
-  <!-- Scripts (same order as before) -->
-  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
-  <script src="js/player.js"></script>
-  <script src="js/bullet.js"></script>
-  <script src="js/enemy.js"></script>
-  <script src="js/perks.js"></script>
-  <script src="js/upgrades.js"></script>
-  <script src="js/multiplayer.js"></script>
-  <script src="js/game.js"></script>
-  <script src="js/main.js"></script>
-
-</body>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    
+    <!-- Utils and Core -->
+    <script src="js/utils.js"></script>
+    <script src="js/gameState.js"></script>
+    
+    <!-- Managers -->
+    <script src="js/managers/InputManager.js"></script>
+    <script src="js/managers/ScoreManager.js"></script>
+    <script src="js/managers/WaveManager.js"></script>
+    <script src="js/managers/ShopManager.js"></script>
+    
+    <!-- Game Elements -->
+    <script src="js/ui/DamageIndicator.js"></script>
+    <script src="js/items/CurrencyDrop.js"></script>
+    <script src="js/ui/Bestiary.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/bullet.js"></script>
+    <script src="js/enemy.js"></script>
+    <script src="js/perks.js"></script>
+    <script src="js/upgrades.js"></script>
+    
+    <!-- Multiplayer -->
+    <script src="js/multiplayer.js"></script>
+    
+    <!-- Core Game -->
+    <script src="js/game.js"></script>
+    <script src="js/main.js"></script>
+  </body>
 </html>
