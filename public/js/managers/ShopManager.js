@@ -74,4 +74,49 @@ class ShopManager {
         document.getElementById("shopMenu").classList.remove("show");
         this.game.resumeGame();
     }
+
+    // Add this method to ShopManager class
+renderWaveShop() {
+    const shopItems = document.getElementById("waveShopItems");
+    const currencyDisplay = document.getElementById("waveCurrency");
+
+    shopItems.innerHTML = "";
+    shopItems.className = "shop-grid";
+
+    // Get 5 random items
+    const randomItems = Object.values(ITEMS)
+        .sort(() => 0.5 - Math.random())
+        .slice(0, 5);
+
+    currencyDisplay.style.position = "absolute";
+    currencyDisplay.style.top = "20px";
+    currencyDisplay.style.right = "20px";
+    currencyDisplay.style.fontSize = "24px";
+    currencyDisplay.style.color = "#ffd700";
+    currencyDisplay.textContent = `Currency: ${this.game.player.currency}`;
+
+    randomItems.forEach((item) => {
+        const itemElement = document.createElement("div");
+        itemElement.className = `shop-item ${
+            this.game.player.currency < item.cost ? "disabled" : ""
+        }`;
+        itemElement.innerHTML = `
+            <h3>${item.name}</h3>
+            <p>${item.description}</p>
+            <p class="cost">Cost: ${item.cost}</p>
+        `;
+
+        if (this.game.player.currency >= item.cost) {
+            itemElement.onclick = () => {
+                this.game.player.currency -= item.cost;
+                item.effect(this.game.player);
+                currencyDisplay.textContent = `Currency: ${this.game.player.currency}`;
+                this.renderWaveShop();
+            };
+        }
+
+        shopItems.appendChild(itemElement);
+    });
+}
+
 }

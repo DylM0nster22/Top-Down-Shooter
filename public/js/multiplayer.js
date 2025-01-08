@@ -59,7 +59,7 @@ setInterval(() => {
     }
 
     initializeSocket() {
-      this.socket = io("https://topdown-game.glitch.me");
+      this.socket = io("https://top-down-shooter.onrender.com");
       game.isMultiplayer = true; 
       console.log("Socket initialized");
 
@@ -120,15 +120,6 @@ setInterval(() => {
             enemy.id = data.id;
             enemy.health = data.health;
             game.enemies.push(enemy);
-          
-            // Move the emission here or to a separate function that handles enemy spawning
-            this.socket.emit("enemy_spawn", {
-              roomCode: this.roomCode,  // Use this.roomCode instead of data.roomCode
-              type: enemy.constructor.name,
-              x: enemy.x,
-              y: enemy.y,
-              id: enemy.id
-            });
           }
         });
       
@@ -162,6 +153,20 @@ setInterval(() => {
       this.socket.on("enemy_died", (enemyId) => {
           game.enemies = game.enemies.filter(e => e.id !== enemyId);
       });
+
+      this.socket.on("wave_timer_update", (data) => {
+        game.waveManager.timeLeft = data.timeLeft;
+    });
+
+    this.socket.on("all_players_ready", () => {
+        document.getElementById("startWaveBtn").textContent = "Start Wave";
+        document.getElementById("startWaveBtn").disabled = false;
+    });
+
+    this.socket.on("player_waiting", () => {
+        document.getElementById("startWaveBtn").textContent = "Waiting for other player...";
+        document.getElementById("startWaveBtn").disabled = true;
+    });
       }  
     createRoom() {
     this.initializeSocket();

@@ -28,6 +28,9 @@ class Enemy {
       if (distance !== 0) {
         dx /= distance;
         dy /= distance;
+
+        this.x += dx;
+        this.y += dy;
       }
   
       // Move the enemy toward the player
@@ -124,6 +127,19 @@ class Enemy {
   
       this.player.gainXP(xpAmount);
       return new CurrencyDrop(this.x, this.y, currencyAmount);
+    }
+
+    getXPValue() {
+      return this instanceof FastEnemy ? 10
+          : this instanceof TankEnemy ? 25
+          : this instanceof ShooterEnemy ? 20
+          : this instanceof EliteFastEnemy ? 40
+          : this instanceof EliteTankEnemy ? 50
+          : this instanceof EliteShooterEnemy ? 45
+          : this instanceof BomberEnemy ? 30
+          : this instanceof TeleporterEnemy ? 35
+          : this instanceof PulsarEnemy ? 40
+          : 10;
     }
   }
   

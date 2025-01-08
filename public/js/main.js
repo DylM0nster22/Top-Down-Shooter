@@ -149,6 +149,29 @@ window.onload = () => {
     game.isHost = false; // The guest
   });
 
+  // Add this code where other event listeners are initialized
+  document.querySelectorAll('.code-digit').forEach((input, index) => {
+  input.addEventListener('input', function(e) {
+      if (this.value.length === 1) {
+          const nextInput = this.nextElementSibling;
+          if (nextInput) {
+              nextInput.focus();
+          }
+      }
+  });
+
+  // Also handle backspace to go to previous input
+  input.addEventListener('keydown', function(e) {
+      if (e.key === 'Backspace' && !this.value) {
+          const prevInput = this.previousElementSibling;
+          if (prevInput) {
+              prevInput.focus();
+          }
+      }
+  });
+  });
+
+
   //--- The game loop stays the same, but we also call updateMenus each frame ---
   function gameLoop(timestamp) {
     const deltaTime = timestamp - lastTime;

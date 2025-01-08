@@ -22,14 +22,19 @@ class InputManager {
         });
 
         window.addEventListener("mousedown", (e) => {
-            if (e.button === 0) {
-                const now = performance.now();
-                if (now - this.lastShotTime > this.shotCooldown / this.game.player.stats.fireRate) {
-                    this.game.shoot(e);
-                    this.lastShotTime = now;
-                }
+            if (e.button === 0 && this.game.state === GameState.PLAYING) {
+                this.handleShoot(e);
             }
         });
+    }
+
+    handleShoot(e) {
+        const now = performance.now();
+        if (now - this.lastShotTime > this.shotCooldown / this.game.player.stats.fireRate) {
+            // Always allow shooting regardless of multiplayer status
+            this.game.shoot(e);
+            this.lastShotTime = now;
+        }
     }
 
     getKeys() {

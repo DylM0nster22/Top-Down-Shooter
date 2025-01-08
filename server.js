@@ -75,6 +75,12 @@ socket.on("bullet_fired", (data) => {
           health: data.health
         });
       });
+
+      // Client side (everyone including host):
+socket.on("wave_timer_update", (data) => {
+  game.waveManager.timeLeft = data.timeLeft;
+});
+
       
     
     
@@ -95,6 +101,13 @@ socket.on("bullet_fired", (data) => {
         if (room) {
             io.to(data.roomCode).emit("enemy_died", data.id);
         }
+    });
+
+    // Add new socket event
+    socket.on("wave_timer_sync", (data) => {
+      io.to(data.roomCode).emit("wave_timer_update", {
+        timeLeft: data.timeLeft
+      });
     });
   });
 
