@@ -20,7 +20,7 @@ setInterval(() => {
         direction: game.player.direction,
       });
     }
-  }, 10); // or 100ms, whichever
+  }, 100); // or 100ms, whichever
   
 
       // Add skin selector setup
