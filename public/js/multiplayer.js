@@ -154,7 +154,8 @@ setInterval(() => {
           game.enemies = game.enemies.filter(e => e.id !== enemyId);
       });
 
-      this.socket.on("wave_timer_update", (data) => {
+        this.socket.on("wave_timer_update", (data) => {
+            console.log(`Received wave timer update: ${data.timeLeft} seconds left`);
         game.waveManager.timeLeft = data.timeLeft;
     });
 

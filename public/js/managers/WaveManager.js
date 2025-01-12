@@ -15,9 +15,7 @@ class WaveManager {
     }
 
     start() {
-        this.isActive = true;
-        this.enemiesSpawned = 0;
-        document.getElementById("waveMenu").classList.remove("show");
+        this.startWave();
     }
 
     complete() {
@@ -47,13 +45,26 @@ class WaveManager {
         this.game.shopManager.renderWaveShop();
         waveMenu.classList.add("show");
 
+        // Add event listener for start wave button
+        const startWaveBtn = document.getElementById("startWaveBtn");
+        startWaveBtn.onclick = () => {
+            this.startWave();
+            waveMenu.classList.remove("show");
+        };
+
         if (this.game.isMultiplayer) {
-            const startWaveBtn = document.getElementById("startWaveBtn");
             startWaveBtn.textContent = "Ready";
             this.game.multiplayerManager.socket.emit("player_ready", {
                 roomCode: this.game.multiplayerManager.roomCode
             });
         }
+    }
+
+    startWave() {
+        this.isActive = true;
+        this.enemiesSpawned = 0;
+        this.timeLeft = this.waveTimer;
+        this.game.state = GameState.PLAYING;
     }
     
 
@@ -76,7 +87,8 @@ class WaveManager {
         }
         // If singleplayer or host, do the usual wave logic
         if (this.isActive) {
-            this.timeLeft = Math.max(0, this.timeLeft - deltaTime / 1000);
+        this.timeLeft = Math.max(0, this.timeLeft - deltaTime / 1000);
+        console.log(`Wave timer updated: ${this.timeLeft} seconds left`);
             
             // Spawn enemies
             if (this.enemiesSpawned < this.enemiesPerWave && 

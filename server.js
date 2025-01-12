@@ -105,8 +105,9 @@ socket.on("wave_timer_update", (data) => {
 
     // Add new socket event
     socket.on("wave_timer_sync", (data) => {
+      console.log(`Syncing wave timer for room ${data.roomCode}: ${data.timeLeft}`);
       io.to(data.roomCode).emit("wave_timer_update", {
-        timeLeft: data.timeLeft
+          timeLeft: data.timeLeft
       });
     });
   });
