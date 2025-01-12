@@ -1,13 +1,10 @@
+import SkinSelector from './skinSelector.js';
+
 class MultiplayerManager {
     constructor() {
         this.socket = null;
         this.roomCode = null;
-        this.selectedSkin = localStorage.getItem("selectedSkin") || "default";
-        this.availableSkins = [
-            { id: "triangle", shape: "triangle" },
-            { id: "diamond", shape: "diamond" },
-            { id: "hexagon", shape: "hexagon" },
-        ];
+        this.skinSelector = new SkinSelector(); // Initialize the skin selector
 
         // Fires every few milliseconds to broadcast the local player’s data
         setInterval(() => {
@@ -24,11 +21,6 @@ class MultiplayerManager {
 
         // Initialize socket
         this.initializeSocket();
-    }
-
-    selectSkin(skinId) {
-        this.selectedSkin = skinId;
-        localStorage.setItem("selectedSkin", skinId);
     }
 
     updatePlayerState() {
