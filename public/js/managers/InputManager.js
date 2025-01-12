@@ -17,7 +17,10 @@ class InputManager {
             }
         });
 
-        window.addEventListener("keyup", (e) => {
+window.addEventListener("keyup", (e) => {
+    if (e.key === "E" && this.game.state === GameState.PAUSED) {
+        this.game.showBestiary(); // Call to show the enemies menu
+    }
             this.keys[e.key] = false;
         });
 
