@@ -15,7 +15,7 @@ class Game {
           this.canvas.width / 2 - 15,
           this.canvas.height / 2 - 15,
           4,
-          "blue"
+          localStorage.getItem("selectedSkin") || "blue" // Set default skin
       );
       
       this.bullets = [];

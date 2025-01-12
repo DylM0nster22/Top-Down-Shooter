@@ -214,11 +214,12 @@ class Enemy {
     }
   }
   
-  class ShooterEnemy extends Enemy {
+class ShooterEnemy extends Enemy {
     constructor(x, y, player) {
       super(x, y, 2, "#ff8c00", player);
       this.lastShot = 0;
       this.shootInterval = 2000;
+      this.minDistance = 200; // Minimum distance to maintain from player
     }
   
     draw(ctx) {
@@ -273,10 +274,41 @@ class Enemy {
     }
   
     update(canvas, player, game) {
-      super.update(canvas, player);
+      // Calculate direction to player (center to center)
+      const enemyCenterX = this.x + this.width / 2;
+      const enemyCenterY = this.y + this.height / 2;
+      const playerCenterX = player.x + player.width / 2;
+      const playerCenterY = player.y + player.height / 2;
+
+      let dx = playerCenterX - enemyCenterX;
+      let dy = playerCenterY - enemyCenterY;
+
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      
+      // Only move if we're too far away
+      if (distance > this.minDistance) {
+        if (distance !== 0) {
+          dx /= distance;
+          dy /= distance;
+        }
+        this.x += dx * this.speed;
+        this.y += dy * this.speed;
+      }
+
+      // Shooting logic
       if (performance.now() - this.lastShot > this.shootInterval) {
         this.shoot(player, game);
         this.lastShot = performance.now();
+      }
+
+      // Deactivate if it goes way off screen (rare)
+      if (
+        this.x < -50 ||
+        this.x > canvas.width + 50 ||
+        this.y < -50 ||
+        this.y > canvas.height + 50
+      ) {
+        this.active = false;
       }
     }
   }

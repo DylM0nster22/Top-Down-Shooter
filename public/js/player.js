@@ -1,6 +1,6 @@
 // player.js
 class Player {
-    constructor(x, y, speed, color) {
+    constructor(x, y, speed, skinId) {
       this.x = x;
       this.y = y;
       this.speed = speed;
