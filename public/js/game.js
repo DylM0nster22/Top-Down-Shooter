@@ -11,12 +11,13 @@ class Game {
       this.shopManager = new ShopManager(this);
 
       // Core game elements
-      this.player = new Player(
-          this.canvas.width / 2 - 15,
-          this.canvas.height / 2 - 15,
-          4,
-          localStorage.getItem("selectedSkin") || "blue" // Set default skin
-      );
+this.player = new Player(
+    this.canvas.width / 2 - 15,
+    this.canvas.height / 2 - 15,
+    4,
+    localStorage.getItem("selectedSkin") || "blue", // Set default skin
+    "blue" // Default color
+);
       
       this.bullets = [];
       this.enemyBullets = [];
