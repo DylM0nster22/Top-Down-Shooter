@@ -1,4 +1,5 @@
 let lastTime = 0; // Initialize lastTime
+let game;
 import SkinSelector from './skinSelector.js'; // Import the SkinSelector class
 
 window.onload = () => {
