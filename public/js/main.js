@@ -1,15 +1,10 @@
+// main.js
+
 let lastTime = 0; // Initialize lastTime
-let game;
-import SkinSelector from './skinSelector.js'; // Import the SkinSelector class
 
 window.onload = () => {
   const canvas = document.getElementById("gameCanvas");
   game = new Game(canvas);
-
-  // Initialize Skin Selector
-  const skinSelector = new SkinSelector();
-  const skinSelectorContainer = document.querySelector('.skin-selector');
-  skinSelector.renderSkinSelector(skinSelectorContainer); // Render skin options
 
   // Grab references to the menus and buttons
   const mainMenu = document.getElementById("mainMenu");
@@ -175,6 +170,7 @@ window.onload = () => {
       }
   });
   });
+
 
   //--- The game loop stays the same, but we also call updateMenus each frame ---
   function gameLoop(timestamp) {
