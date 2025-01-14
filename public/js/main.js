@@ -2,7 +2,7 @@
 
 let lastTime = 0; // Initialize lastTime
 
-window.onload = () => {
+window.onload = async () => {
   const canvas = document.getElementById("gameCanvas");
   game = new Game(canvas);
 
@@ -200,4 +200,9 @@ window.onload = () => {
       });
     }
   }, 10);
+
+  // Initialize skin selector
+  const { default: SkinSelector } = await import('./skinSelector.js');
+  const skinSelector = new SkinSelector();
+  skinSelector.renderSkinSelector(document.querySelector('.skin-selector-container'));
 };
