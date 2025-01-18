@@ -1,5 +1,6 @@
 A modern browser-based space shooter game built with vanilla JavaScript, featuring dynamic gameplay mechanics, upgrades, and multiplayer capabilities.
 
+![image](https://github.com/user-attachments/assets/2d193cdb-7618-4312-bb13-5b995dd9bd03)
 
 
 ## 🎮 Features
