@@ -51,11 +51,7 @@ window.onload = async () => {
   });
 
   multiplayerBtn.addEventListener("click", () => {
-    game = new Game(canvas, true); // Initialize with multiplayer flag
-    game.state = GameState.MULTIPLAYER_MENU;
-    mainMenu.classList.remove("show");
-    gamemodeMenu.classList.remove("show");
-    multiplayerMenu.classList.add("show");
+    alert("Multiplayer mode is currently under development!");
   });
 
   // Back button returns to main menu

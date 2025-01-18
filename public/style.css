@@ -552,5 +552,31 @@
     margin-top: 10px;
 }
 
+.multiplayer-container {
+    position: relative;
+    display: inline-block;
+}
+
+.dev-label {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: #ff4444;
+    white-space: nowrap;
+}
+
+button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #666;
+    color: #999;
+}
+
+button.disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
   
   
