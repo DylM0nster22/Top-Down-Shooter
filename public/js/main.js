@@ -1,6 +1,7 @@
 // main.js
 
 let lastTime = 0; // Initialize lastTime
+let devMode = false;
 
 window.onload = async () => {
   const canvas = document.getElementById("gameCanvas");
@@ -74,6 +75,48 @@ window.onload = async () => {
     gameOverMenu.classList.toggle("show", game.state === GameState.GAME_OVER);
   }
 
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "g") {
+      devMode = !devMode; // Toggle dev mode
+      if (devMode) {
+        enableDevMode();
+      } else {
+        disableDevMode();
+      }
+    }
+  });
+
+  function enableDevMode() {
+    // Grant all ships
+    const skinSelector = new SkinSelector();
+    skinSelector.availableSkins.forEach(skin => {
+        skin.unlocked = true; // Unlock each skin
+    });
+    localStorage.setItem("availableSkins", JSON.stringify(skinSelector.availableSkins));
+
+    // Set infinite currency
+    const player = game.player;
+    player.currency = Infinity;
+
+    // Update the skin selector UI
+    const skinSelectorContent = document.getElementById("skinSelectorContent");
+    if (skinSelectorContent) {
+        skinSelector.renderSkinSelector(skinSelectorContent);
+    }
+
+    // Optionally, you can log to the console
+    console.log("Developer mode enabled: All ships unlocked and infinite currency granted.");
+}
+
+  function disableDevMode() {
+    // Reset currency to a reasonable amount if needed
+    const player = game.player;
+    player.currency = 1000; // Set to a default value or whatever you prefer
+
+    // Optionally, you can log to the console
+    console.log("Developer mode disabled.");
+  }
+
   // Main Menu: Quit
   quitBtn.addEventListener("click", () => {
     // For a browser game, "quit" can just close the window or confirm
@@ -91,6 +134,8 @@ window.onload = async () => {
   // Pause Menu: Main Menu
   mainMenuBtn.addEventListener("click", () => {
     game.showMainMenu();
+    game.waveManager.reset(); // Reset wave manager
+    game.isWaveActive = false; // Reset wave active state
     updateMenus();
   });
 
@@ -171,6 +216,29 @@ window.onload = async () => {
   });
   });
 
+  // Update the skin selector button handlers
+  const skinSelectorBtn = document.getElementById("skinSelectorBtn");
+  const closeSkinSelectorBtn = document.getElementById("closeSkinSelectorBtn");
+  const skinSelectorMenu = document.getElementById("skinSelectorMenu");
+
+  if (skinSelectorBtn) {
+    skinSelectorBtn.addEventListener("click", () => {
+      skinSelectorMenu.classList.add("show");
+    });
+  }
+
+  if (closeSkinSelectorBtn) {
+    closeSkinSelectorBtn.addEventListener("click", () => {
+      skinSelectorMenu.classList.remove("show");
+    });
+  }
+
+  // Initialize skin selector
+  const skinSelector = new SkinSelector();
+  const skinSelectorContent = document.getElementById("skinSelectorContent");
+  if (skinSelectorContent) {
+    skinSelector.renderSkinSelector(skinSelectorContent);
+  }
 
   //--- The game loop stays the same, but we also call updateMenus each frame ---
   function gameLoop(timestamp) {
@@ -200,9 +268,4 @@ window.onload = async () => {
       });
     }
   }, 10);
-
-  // Initialize skin selector
-  const { default: SkinSelector } = await import('./skinSelector.js');
-  const skinSelector = new SkinSelector();
-  skinSelector.renderSkinSelector(document.querySelector('.skin-selector-container'));
 };

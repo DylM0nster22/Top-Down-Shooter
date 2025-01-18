@@ -16,9 +16,7 @@
       <button id="playBtn">START GAME</button>
       <button id="quitBtn">QUIT</button>
       <button id="bestiaryBtn">ENEMIES</button>
-      <div class="skin-selector-container">
-        <!-- Skin selector will be rendered here -->
-      </div>
+      <button id="skinSelectorBtn">SHIPS</button>
     </div>
 
     <!-- Pause Menu Overlay -->
@@ -96,6 +94,13 @@
       <button id="connectToRoomBtn">CONNECT</button>
     </div>
 
+    <!-- Add this after your other menu overlays -->
+    <div id="skinSelectorMenu" class="menu-overlay">
+        <h1>SHIPS</h1>
+        <div id="skinSelectorContent" class="bestiary-grid"></div>
+        <button id="closeSkinSelectorBtn">BACK</button>
+    </div>
+
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     
     <!-- Utils and Core -->
@@ -107,6 +112,7 @@
     <script src="js/managers/ScoreManager.js"></script>
     <script src="js/managers/WaveManager.js"></script>
     <script src="js/managers/ShopManager.js"></script>
+    <script src="js/managers/AchievementManager.js"></script>
     
     <!-- Game Elements -->
     <script src="js/ui/HUD.js"></script>
@@ -119,9 +125,12 @@
     <script src="js/enemy.js"></script>
     <script src="js/perks.js"></script>
     <script src="js/upgrades.js"></script>
+
+
+    <script src="js/ui/AchievementUI.js"></script>
     
     <!-- Skin Selector -->
-    <script src="js/skinSelector.js" type="module"></script>
+    <script src="js/skinSelector.js"></script>
     
     <!-- Multiplayer -->
     <script src="js/multiplayer.js" type="module"></script>

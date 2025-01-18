@@ -11,13 +11,14 @@ class Game {
       this.shopManager = new ShopManager(this);
 
       // Core game elements
-this.player = new Player(
-    this.canvas.width / 2 - 15,
-    this.canvas.height / 2 - 15,
-    4,
-    localStorage.getItem("selectedSkin") || "blue", // Set default skin
-    "blue" // Default color
-);
+      const selectedSkin = localStorage.getItem("selectedSkin") || "triangle";
+      this.player = new Player(
+          this.canvas.width / 2 - 15,
+          this.canvas.height / 2 - 15,
+          4,
+          selectedSkin,
+          "blue"
+      );
       
       this.bullets = [];
       this.enemyBullets = [];
@@ -159,10 +160,12 @@ this.player = new Player(
   }
 
   resetGame() {
+      const selectedSkin = localStorage.getItem("selectedSkin") || "triangle";
       this.player = new Player(
           this.canvas.width / 2 - 15,
           this.canvas.height / 2 - 15,
           4,
+          selectedSkin,
           "blue"
       );
       this.bullets = [];
@@ -287,8 +290,18 @@ this.player = new Player(
 }
 showMainMenu() {
   this.state = GameState.MAIN_MENU;
+  this.resetGame();
   updateMenus();
 }
+
+  showGameOverScreen() {
+      // Implement the logic to display the game over screen
+      const gameOverMenu = document.getElementById("gameOverMenu");
+      gameOverMenu.classList.add("show");
+      // Optionally, update the final score display
+      const finalScore = document.getElementById("finalScore");
+      finalScore.textContent = `Final Score: ${this.scoreManager.getScore()}`;
+  }
 
 }
 

@@ -491,4 +491,66 @@
     border-top: 1px solid rgba(74, 144, 226, 0.3);
   }
   
+  .skin-selector-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    padding: 20px;
+  }
+  
+  .skin-selector-container h2 {
+    color: #4a90e2;
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+  
+  #skinSelectorMenu {
+    display: none;
+  }
+  
+  #skinSelectorMenu.show {
+    display: flex;
+  }
+  
+  .skin-card {
+    background: rgba(20, 30, 40, 0.8);
+    border: 2px solid #4a90e2;
+    border-radius: 15px;
+    padding: 25px;
+    color: white;
+    transition: all 0.3s ease;
+  }
+  
+  .skin-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px rgba(74, 144, 226, 0.3);
+  }
+  
+  .skin-card.selected {
+    border-color: #ffd700;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+  }
+
+  .skin-card.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: rgba(100, 100, 100, 0.5);
+}
+
+.skin-card.disabled:hover {
+    transform: none; /* Prevent hover effects */
+    box-shadow: none;
+}
+
+.unlock-condition {
+    font-size: 14px;
+    color: #ff4444;
+    text-align: center;
+    margin-top: 10px;
+}
+
+  
   
